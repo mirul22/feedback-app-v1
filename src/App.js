@@ -1,9 +1,38 @@
+import { useState } from "react";
+import Header from "./components/Header";
+import FeedbackList from "./components/FeedbackList";
+import FeedbackStats from "./components/FeedbackStats";
+import FeedbackData from "./data/FeedbackData";
+import Swal from "sweetalert2";
+
 function App() {
-    return (
-        <div className="container">
-            <h1>My App</h1>
-        </div>
-    )
+  const [feedback, setFeedback] = useState(FeedbackData);
+  const deleteFeedback = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setFeedback(feedback.filter((item) => item.id !== id));
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
+  };
+
+  return (
+    <>
+      <Header />
+      <div className="container">
+        <FeedbackStats feedback={feedback} />
+        <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
+      </div>
+    </>
+  );
 }
 
-export default App
+export default App;
