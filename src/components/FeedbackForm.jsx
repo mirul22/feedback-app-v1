@@ -44,9 +44,13 @@ function FeedbackForm() {
       if (feedbackEdit.edit === true) {
         updateFeedback(feedbackEdit.item.id, newFeedback);
         Swal.fire("Good job!", "You just update a feedback!", "success");
+        setText("");
+        setRating(10);
       } else {
         addFeedback(newFeedback);
         Swal.fire("Good job!", "You just submitted a feedback!", "success");
+        setText("");
+        setRating(10);
       }
     } else {
       Swal.fire(
